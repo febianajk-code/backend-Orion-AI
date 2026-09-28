@@ -1,4 +1,13 @@
 export default async function handler(req, res) {
+    // Izinkan akses CORS
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
+
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
     }
@@ -41,11 +50,11 @@ Aturan: Gunakan informasi di atas agar akurat, informatif, dan jangan mengarang 
             ...messages.map(m => ({ role: m.role, content: m.content }))
         ];
 
-        // 3. Kirim ke OpenRouter
+        // 3. Kirim ke OpenRouter (Menggunakan API Key Terbaru)
         const openRouterRes = await fetch("https://openrouter.ai/api/v1/chat/completions", {
             method: 'POST',
-            headers: {
-                'Authorization': `Bearer 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`,
+      headers: {
+                'Authorization': 'Bearer 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',
                 'HTTP-Referer': 'https://orion-ai.vercel.app',
                 'X-Title': 'Orion AI',
                 'Content-Type': 'application/json'
